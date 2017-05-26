@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			*{
+				padding: 0;
+				margin: 0;
+			}
+			ul{
+				list-style:none;
+				margin: 0 auto;
+				position: relative;
+			}
+			.pic{
+				width: 236px;
+		        box-shadow:0 1px 3px rgba(0,0,0,.3);
+		        overflow:hidden;
+		        margin-top:10px;
+		        position: absolute;
+       		    transition:1s;
+			}
+			 img{
+		        width:236px;
+		        border: none;
+		        display: block;
+		      }
+		</style>
+	</head>
+	<body>
+		<ul id="ul">
+    	</ul>
+		<script type="text/javascript" src="jquery-3.2.1.js"></script>
+		<script type="text/javascript">
+			var num=0;
+			var iW=236;//一张图片的宽度
+			var clientW=$(window).innerWidth();//可视区的宽度
+			var marginW = 10; //间距的宽
+			var tw=iW+marginW;//图片加间距
+			var len=Math.floor(clientW/tw);//求出当前可视区能放几个图片
+			console.log(len*tw-marginW)
+			$('#ul').css('width',len*tw-marginW);//ul的宽度
+			var arrT = []; //存top值的数组
+			var arrL = [];//存left值的数组
+			//初始化每个图片的top、left
+			for(var i=0;i<len;i++){
+				arrT.push(0);
+				arrL.push(i*tw);
+			}
+			$.ajax({
+				dataType:'jsonp',
+				url:'http://www.wookmark.com/api/json/popular?callback=?',
+				data:{
+					page:num
+				},
+				success:function(data){
+					$.each(data, function(i,e) {
+						var h = e.height*(iW/e.width);//求出当前pic的高度
+						var $img = $('<img />');
+						$img.attr('src',e.preview); //给图片url
+						$img[0].onload=function(){
+							var $li=$('<li class="pic">');
+							$li.append($img);
+							$li.css({
+									left:arrL[minIndex().index],
+									top:arrT[minIndex().index],
+									height:h
+								});
+							$('#ul').append($li);
+							arrT[minIndex().index] += (h+10);
+						}
+					});
+				}
+			});
+			function minIndex(){
+				let find = Math.min.apply(null,arrT);
+				let index = arrT.findIndex((e)=>{
+						return e == find;
+				});
+				return {
+					index,
+					find 
+				}
+			}
+		</script>
+	</body>
+</html>
