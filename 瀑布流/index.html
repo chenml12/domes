@@ -73,6 +73,14 @@
 					});
 				}
 			});
+				$(document).scroll(function(){
+					if(clientH + $(window).scrollTop() >= minIndex().find){
+						if(onOff){
+							num ++;
+							createPic();
+						}
+					}
+				});
 			function minIndex(){
 				let find = Math.min.apply(null,arrT);
 				let index = arrT.findIndex((e)=>{
