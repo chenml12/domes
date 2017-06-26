@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			*{
+				padding: 0;
+				margin: 0;
+			}
+			#box{
+				width: 940px;
+				margin: 0 auto;
+				background: #eee;
+			}
+			h2{
+	            text-align: center;
+	            padding: 15px 0 0 0;
+	            margin: 10px 0;
+	        }
+	        #list{
+	        	list-style: none;
+	        	padding:20px;
+	        }
+	        #list li{
+	        	display: block;
+	            height: 40px;
+	            line-height: 40px;
+	            width: 100%;
+	            margin: 20px 0 0;
+	        }
+	        #list li span{
+	        	width: 80px;
+	        	display: inline-block;
+	        	text-align: center;
+	        	margin: 0 10px;
+	        	height: 40px;
+	        	float: left;
+	        }
+	         #list li span.no-con{
+	        	background: #ddd;
+	        }
+	        #list li span.g1{
+	            background-color: lightskyblue;
+	        }
+	         #list li  span.g2{
+	            background-color: mediumaquamarine;
+	        }
+	         #list li  span.g3{
+	            background-color: lightgreen;
+	        }
+			
+		</style>
+	</head>
+	<body>
+		<div id="box">
+			<h2>九九乘法口诀</h2>
+			<ul id="list">
+				<!--<li><span>1*1=1</span></li>
+				<li><span>1*1=1</span></li>-->
+			</ul>
+		</div>
+		<script type="text/javascript">
+			var list=document.getElementById('list');
+			var str='';
+			for(var i=1; i<10; i++){
+				str+='<li>';
+					for(var j=1; j<10; j++){
+						if(j<=i){
+							var val="g1";
+							if(i%3==0){
+								if(j%3==0){
+									val="g1";
+								}else if(j%3==1){
+									val='g2';
+								}else{
+									val='g3';
+								}
+							}else if(i%3==1){
+								if(j%3==0){
+									val="g2";
+								}else if(j%3==1){
+									val='g3';
+								}else{
+									val='g1';
+								}
+							}else{
+								if(j%3==0){
+									val="g3";
+								}else if(j%3==1){
+									val='g1';
+								}else{
+									val='g2';
+								}
+							}
+							str+='<span class="'+val+'">'+j+"*"+i+"="+j*i+'</span>';
+						}else{
+							str+='<span class="no-con"></span>';
+						}
+					}
+				str+='</li>'
+			}			list.innerHTML=str;
+		</script>
+	</body>
+</html>
